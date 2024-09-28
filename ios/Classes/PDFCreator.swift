@@ -1,5 +1,25 @@
 import UIKit
 
+class CustomPrintPageRenderer: UIPrintPageRenderer {
+
+    let pageSize: CGRect
+    let margins: UIEdgeInsets
+
+    init(pageSize: CGRect, margins: UIEdgeInsets) {
+        self.pageSize = pageSize
+        self.margins = margins
+        super.init()
+    }
+
+    override var paperRect: CGRect {
+        return pageSize
+    }
+
+    override var printableRect: CGRect {
+        return pageSize.inset(by: margins)
+    }
+}
+
 class PDFCreator {
     
     /**
@@ -13,9 +33,11 @@ class PDFCreator {
         renderer.addPrintFormatter(printFormatter, startingAtPageAt: 0)
         
         // assign paperRect and printableRect values
-        let page = CGRect(x: 0, y: 0, width: 595.2, height: 841.8) // A4, 72 dpi
-        renderer.setValue(page, forKey: "paperRect")
-        renderer.setValue(page, forKey: "printableRect")
+        // Assign the print formatter to the custom print page renderer
+        let renderer = CustomPrintPageRenderer(
+            pageSize: CGRect(x: 0, y: 0, width: 595.2, height: 841.8), // A4 size
+            margins: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20) // Add margins
+        )
         
         // create pdf context and draw each page
         let pdfData = NSMutableData()
