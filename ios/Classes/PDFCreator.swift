@@ -29,8 +29,6 @@ class PDFCreator {
     class func create(printFormatter: UIPrintFormatter) -> URL {
         
         // assign the print formatter to the print page renderer
-        let renderer = UIPrintPageRenderer()
-        renderer.addPrintFormatter(printFormatter, startingAtPageAt: 0)
         
         // assign paperRect and printableRect values
         // Assign the print formatter to the custom print page renderer
@@ -38,6 +36,7 @@ class PDFCreator {
             pageSize: CGRect(x: 0, y: 0, width: 595.2, height: 841.8), // A4 size
             margins: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20) // Add margins
         )
+        renderer.addPrintFormatter(printFormatter, startingAtPageAt: 0)
         
         // create pdf context and draw each page
         let pdfData = NSMutableData()

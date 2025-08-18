@@ -13,12 +13,14 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp();
+
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  String generatedPdfFilePath;
+  String? generatedPdfFilePath;
 
   @override
   void initState() {
@@ -86,7 +88,9 @@ class _MyAppState extends State<MyApp> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => PDFViewerScaffold(appBar: AppBar(title: Text("Generated PDF Document")), path: generatedPdfFilePath)),
+              MaterialPageRoute(
+                  builder: (context) => PDFViewerScaffold(
+                      appBar: AppBar(title: Text("Generated PDF Document")), path: generatedPdfFilePath ?? "")),
             );
           },
         ),
